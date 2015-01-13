@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">C\'est quand ?</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Paramètres</string>
+    <string name="action_new">Nouveau</string>
+    <string name="action_save">Enregistrer</string>
+
+    <string name="just">plus que</string>
+    <string name="days">jours</string>
+    <string name="hours">heures</string>
+    <string name="minutes">minutes</string>
+    <string name="seconds">secondes</string>
+    <string name="left"></string>
+</resources>

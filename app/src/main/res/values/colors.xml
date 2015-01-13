@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="mainColor">#673ab7</color>
+    <color name="accent">#ffc400</color>
+    <color name="text_primary">#D9FFFFFF</color>
+    <color name="text_secondary">#D9000000</color>
+    <color name="photo_tint">#88101010</color>
+    <color name="cool_green">#abc837</color>
+    <color name="cool_green_dark">#95AD32</color>
+    <color name="light_grey">#F0F0F0</color>
+    <color name="color_accent">#000</color>
+</resources>

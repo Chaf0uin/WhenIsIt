@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <include layout="@layout/toolbar" android:id="@+id/toolbar"/>
+
+    <TextView
+        android:id="@+id/whatEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:text="C'est quoi ?"
+        android:layout_marginBottom="20dp"
+        android:textColor="#000000"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/nameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nom"
+        android:layout_below="@+id/whatEditText"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/descriptionEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Description"
+        android:lines="3"
+        android:layout_below="@+id/nameEditText"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/whenEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@+id/descriptionEditText"
+        android:layout_marginRight="20dp"
+        android:text="C'est quand ?"
+        android:layout_marginBottom="20dp"
+        android:textColor="#000000"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/lblDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_below="@+id/whenEditText"
+        android:layout_marginRight="20dp"
+        android:text="LALALLALALA"
+        android:layout_marginBottom="20dp"
+        android:textColor="#000000"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TROLOLOLOLO"
+        android:id="@+id/lblTime"
+        android:layout_marginRight="40dp"
+        android:layout_alignBottom="@+id/lblDate"
+        android:layout_alignParentRight="true"
+        android:textColor="#000000"
+        android:textSize="16sp" />
+
+</RelativeLayout>
