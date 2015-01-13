@@ -26,6 +26,7 @@ public class MainActivity extends ActionBarActivity {
     private LinearLayoutManager linearLayoutManager;
     private EventAdapter eventAdapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,14 +41,14 @@ public class MainActivity extends ActionBarActivity {
         eventListView.setLayoutManager(linearLayoutManager);
         eventListView.setItemAnimator(new DefaultItemAnimator());
 
-        eventAdapter = new EventAdapter(R.layout.list_card_event, this);
+        eventAdapter = new EventAdapter(R.layout.list_card_event, this, getSupportFragmentManager());
         eventListView.setAdapter(eventAdapter);
 
         DatabaseManager db = new DatabaseManager(this);
         List<Event> eventList = db.getAllUpcomingEvents();
         eventAdapter.addEventList(eventList);
-    }
 
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

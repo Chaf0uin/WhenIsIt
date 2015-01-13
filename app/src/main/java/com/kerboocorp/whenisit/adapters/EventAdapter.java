@@ -3,18 +3,19 @@ package com.kerboocorp.whenisit.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.kerboocorp.whenisit.R;
 import com.kerboocorp.whenisit.activities.EventActivity;
 import com.kerboocorp.whenisit.managers.DatabaseManager;
 import com.kerboocorp.whenisit.model.Event;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,12 +30,14 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private int rowLayout;
     private Context context;
     private DatabaseManager databaseManager;
+    private FragmentManager fragmentManager;
 
-    public EventAdapter(int rowLayout, Context context) {
+    public EventAdapter(int rowLayout, Context context, FragmentManager fragmentManager) {
         this.eventList = new ArrayList<Event>();
         this.rowLayout = rowLayout;
         this.context = context;
         databaseManager = new DatabaseManager(context);
+        this.fragmentManager = fragmentManager;
     }
 
     public List<Event> getEventList() {
@@ -103,6 +106,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 eventViewHolder.event = event;
                 eventViewHolder.eventAdapter = this;
                 eventViewHolder.databaseManager = this.databaseManager;
+                eventViewHolder.fragmentManager = fragmentManager;
             }
 
         }
@@ -115,7 +119,8 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
 
-    public static class EventViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    public static class EventViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
+    {
         public TextView name;
         public TextView daysTextView;
         public TextView daysLabelTextView;
@@ -129,6 +134,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         public Context context;
         public EventAdapter eventAdapter;
         public DatabaseManager databaseManager;
+        public FragmentManager fragmentManager;
 
         public EventViewHolder(View itemView) {
             super(itemView);
@@ -156,10 +162,23 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         @Override
         public boolean onLongClick(View v) {
-            eventAdapter.removeEvent(event);
-            databaseManager.deleteEvent(event);
+            new MaterialDialog.Builder(context)
+                    .title(R.string.delete_event)
+                    .content(R.string.delete_event_explication)
+                    .positiveText(R.string.yes)
+                    .negativeText(R.string.no)
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            eventAdapter.removeEvent(event);
+                            databaseManager.deleteEvent(event);
+                        }
+                    })
+                    .show();
             return true;
         }
+
+
     }
 
 

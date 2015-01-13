@@ -53,7 +53,7 @@ public class
         onCreate(db);
     }
     
-    public void addEvent(Event event) {
+    public Event addEvent(Event event) {
         SQLiteDatabase db = this.getWritableDatabase();
      
         ContentValues values = new ContentValues();
@@ -61,9 +61,11 @@ public class
         values.put(KEY_DESCRIPTION, event.getDescription());
         values.put(KEY_EXPIRATION_DATE, getDateTime(event.getExpirationDate())); 
      
-        // Inserting Row
-        db.insert(TABLE_EVENT, null, values);
-        db.close(); // Closing database connection
+        long id = db.insert(TABLE_EVENT, null, values);
+        event.setId((int) id);
+        db.close();
+
+        return event;
     }
     
     private String getDateTime(Date date) {
@@ -166,8 +168,7 @@ public class
         values.put(KEY_EXPIRATION_DATE, getDateTime(event.getExpirationDate()));
      
         // updating row
-        return db.update(TABLE_EVENT, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(event.getId()) });
+        return db.update(TABLE_EVENT, values, KEY_ID + " = ?", new String[] { String.valueOf(event.getId()) });
     }
     
     public void deleteEvent(Event event) {

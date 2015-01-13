@@ -43,6 +43,7 @@ public class EventActivity extends ActionBarActivity implements DatePickerDialog
 
     private Event currentEvent;
 
+
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -109,11 +110,23 @@ public class EventActivity extends ActionBarActivity implements DatePickerDialog
 		if (id == R.id.action_save) {
 			
 			DatabaseManager db = new DatabaseManager(this);
-            Event event = new Event(nameEditText.getText().toString(), descriptionEditText.getText().toString(), calendar.getTime());
-			db.addEvent(event);
-            Intent returnIntent = new Intent();
-            returnIntent.putExtra("event",(Parcelable) event);
-            setResult(RESULT_OK, returnIntent);
+
+            if (currentEvent == null) {
+                Event event = new Event(nameEditText.getText().toString(), descriptionEditText.getText().toString(), calendar.getTime());
+                event = db.addEvent(event);
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("event",(Parcelable) event);
+                setResult(RESULT_OK, returnIntent);
+            } else {
+                currentEvent.setName(nameEditText.getText().toString());
+                currentEvent.setDescription(descriptionEditText.getText().toString());
+                currentEvent.setExpirationDate(calendar.getTime());
+                db.updateEvent(currentEvent);
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("event",(Parcelable) currentEvent);
+                setResult(RESULT_OK, returnIntent);
+            }
+
             finish();
 			
 			return true;

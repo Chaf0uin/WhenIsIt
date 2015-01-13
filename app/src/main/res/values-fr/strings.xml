@@ -13,4 +13,9 @@
     <string name="minutes">minutes</string>
     <string name="seconds">secondes</string>
     <string name="left"></string>
+
+    <string name="delete_event">Supprimer l\'événement ?</string>
+    <string name="delete_event_explication">L\'événement sera définitivement supprimé de la liste des prochains événements.</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
 </resources>

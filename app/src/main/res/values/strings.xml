@@ -14,4 +14,10 @@
     <string name="seconds">seconds</string>
     <string name="left">left</string>
 
+    <string name="delete_event">Delete the event ?</string>
+    <string name="delete_event_explication">The event will be permanently deleted from the upcoming events list.</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+
 </resources>
