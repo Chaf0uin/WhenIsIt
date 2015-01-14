@@ -1,9 +1,11 @@
 package com.kerboocorp.whenisit.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,13 +33,15 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private Context context;
     private DatabaseManager databaseManager;
     private FragmentManager fragmentManager;
+    private ActionBarActivity activity;
 
-    public EventAdapter(int rowLayout, Context context, FragmentManager fragmentManager) {
+    public EventAdapter(int rowLayout, Context context, FragmentManager fragmentManager, ActionBarActivity activity) {
         this.eventList = new ArrayList<Event>();
         this.rowLayout = rowLayout;
         this.context = context;
         databaseManager = new DatabaseManager(context);
         this.fragmentManager = fragmentManager;
+        this.activity = activity;
     }
 
     public List<Event> getEventList() {
@@ -56,6 +60,17 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     public void removeEvent(Event event) {
         eventList.remove(event);
+        notifyDataSetChanged();
+    }
+
+    public void updateEvent(Event event) {
+        for (Event evt : eventList) {
+            if (evt.getId() == event.getId()) {
+                evt.setName(event.getName());
+                evt.setDescription(event.getDescription());
+                evt.setExpirationDate(event.getExpirationDate());
+            }
+        }
         notifyDataSetChanged();
     }
 
@@ -119,7 +134,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
 
-    public static class EventViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
+    public class EventViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
     {
         public TextView name;
         public TextView daysTextView;
@@ -157,7 +172,7 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             intent.putExtra("event", (Parcelable)event);
             intent.putExtra("action", "update");
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            context.startActivity(intent);
+            EventAdapter.this.activity.startActivityForResult(intent, 2);
         }
 
         @Override

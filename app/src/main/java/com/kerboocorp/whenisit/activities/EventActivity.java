@@ -83,8 +83,10 @@ public class EventActivity extends ActionBarActivity implements DatePickerDialog
             currentEvent = getIntent().getParcelableExtra("event");
             nameEditText.setText(currentEvent.getName());
             descriptionEditText.setText(currentEvent.getDescription());
-            lblDate.setText(dateFormat.format(currentEvent.getExpirationDate()));
-            lblTime.setText(timeFormat.format(currentEvent.getExpirationDate()));
+            Date currentExpirationDate = currentEvent.getExpirationDate();
+            calendar.setTime(currentExpirationDate);
+            lblDate.setText(dateFormat.format(currentExpirationDate));
+            lblTime.setText(timeFormat.format(currentExpirationDate));
         } else {
             update();
         }
@@ -115,14 +117,16 @@ public class EventActivity extends ActionBarActivity implements DatePickerDialog
                 Event event = new Event(nameEditText.getText().toString(), descriptionEditText.getText().toString(), calendar.getTime());
                 event = db.addEvent(event);
                 Intent returnIntent = new Intent();
+                returnIntent.putExtra("action","create");
                 returnIntent.putExtra("event",(Parcelable) event);
                 setResult(RESULT_OK, returnIntent);
             } else {
                 currentEvent.setName(nameEditText.getText().toString());
                 currentEvent.setDescription(descriptionEditText.getText().toString());
                 currentEvent.setExpirationDate(calendar.getTime());
-                db.updateEvent(currentEvent);
+                int rows = db.updateEvent(currentEvent);
                 Intent returnIntent = new Intent();
+                returnIntent.putExtra("action","update");
                 returnIntent.putExtra("event",(Parcelable) currentEvent);
                 setResult(RESULT_OK, returnIntent);
             }

@@ -67,6 +67,23 @@ public class
 
         return event;
     }
+
+    public int updateEvent(Event event) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, event.getName());
+        values.put(KEY_DESCRIPTION, event.getDescription());
+        values.put(KEY_EXPIRATION_DATE, getDateTime(event.getExpirationDate()));
+
+        return db.update(TABLE_EVENT, values, KEY_ID + " = ?", new String[] { String.valueOf(event.getId()) });
+    }
+
+    public void deleteEvent(Event event) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_EVENT, KEY_ID + " = ?", new String[]{String.valueOf(event.getId())});
+        db.close();
+    }
     
     private String getDateTime(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(
@@ -157,24 +174,5 @@ public class
         cursor.close();
  
         return cursor.getCount();
-    }
-    
-    public int updateEvent(Event event) {
-        SQLiteDatabase db = this.getWritableDatabase();
-     
-        ContentValues values = new ContentValues();
-        values.put(KEY_NAME, event.getName());
-        values.put(KEY_DESCRIPTION, event.getDescription());
-        values.put(KEY_EXPIRATION_DATE, getDateTime(event.getExpirationDate()));
-     
-        // updating row
-        return db.update(TABLE_EVENT, values, KEY_ID + " = ?", new String[] { String.valueOf(event.getId()) });
-    }
-    
-    public void deleteEvent(Event event) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_EVENT, KEY_ID + " = ?",
-                new String[] { String.valueOf(event.getId()) });
-        db.close();
     }
 }

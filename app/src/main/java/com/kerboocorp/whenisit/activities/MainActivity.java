@@ -41,7 +41,7 @@ public class MainActivity extends ActionBarActivity {
         eventListView.setLayoutManager(linearLayoutManager);
         eventListView.setItemAnimator(new DefaultItemAnimator());
 
-        eventAdapter = new EventAdapter(R.layout.list_card_event, this, getSupportFragmentManager());
+        eventAdapter = new EventAdapter(R.layout.list_card_event, this, getSupportFragmentManager(), this);
         eventListView.setAdapter(eventAdapter);
 
         DatabaseManager db = new DatabaseManager(this);
@@ -76,8 +76,28 @@ public class MainActivity extends ActionBarActivity {
 
             if (resultCode == RESULT_OK) {
 
+                String action = data.getStringExtra("action");
                 Event event = (Event) data.getParcelableExtra("event");
-                eventAdapter.addEvent(event);
+                if (action.equals("create")) {
+                    eventAdapter.addEvent(event);
+                } else {
+                    eventAdapter.updateEvent(event);
+                }
+
+            }
+        }
+
+        if (requestCode == 2) {
+
+            if (resultCode == RESULT_OK) {
+
+                String action = data.getStringExtra("action");
+                Event event = (Event) data.getParcelableExtra("event");
+                if (action.equals("create")) {
+                    eventAdapter.addEvent(event);
+                } else {
+                    eventAdapter.updateEvent(event);
+                }
 
             }
         }
